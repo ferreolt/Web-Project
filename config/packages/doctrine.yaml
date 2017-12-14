@@ -1,0 +1,39 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(DATABASE_URL): ''
+
+doctrine:
+    dbal:
+        dbname:               my_bdd
+        host:                 127.0.0.1
+        port:                 3306
+        user:                 kerast
+        password:             11235813
+        driver:               pdo_mysql
+        # the DBAL driverClass option
+        driver_class:         App\DBAL\MyDatabaseDriver
+        # the DBAL driverOptions option
+        options:
+            foo: bar
+        path:                 '%kernel.project_dir%/var/data/data.sqlite'
+        memory:               true
+
+        server_version:       5.7
+ 
+
+        # With Symfony 3.3, remove the `resolve:` prefix
+        url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App

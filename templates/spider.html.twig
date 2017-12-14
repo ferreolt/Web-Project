@@ -1,0 +1,54 @@
+{# templates/spider.html.twig #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Spider Market Home</title>
+        {% block stylesheets %}
+        <link href="{{ 'css/bootstrap.css' }}" type="text/css" rel="stylesheet" />
+    	{% endblock %}
+
+    </head>
+
+    <body>
+    <header>
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/spider">Spider Market</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/spider">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/spider/add">Add <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</header>
+<ul id="navigation">
+<div class="row">
+            {% for spider in spiders %}
+                <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <a href="/spider/{{ spider.id }}">
+                    <h4 class="card-title">{{ spider.name }}</h4></a>
+          <h5>{{ spider.price }}€</h5>
+          <div class="card-footer">
+          <a href="/spider/update/{{ spider.id }}" class="btn btn-primary">Update</a>
+           <a href="/spider/remove/{{ spider.id }}" class="btn btn-primary">Remove</a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+            {% endfor %}
+            </div>
+    </body>
+</html>

@@ -29,6 +29,8 @@ class Spiders
      */
     private $name;
 
+
+
     /**
      * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
@@ -49,6 +51,7 @@ class Spiders
         $this->name = $name;
     }
 
+
     public function getPrice()
     {
         return $this->price;
@@ -57,6 +60,11 @@ class Spiders
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
 

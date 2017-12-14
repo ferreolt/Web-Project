@@ -32,14 +32,18 @@
 </nav>
 </header>
 <ul id="navigation">
-<div class="col-lg-6 col-md-6 mb-4">
+<div class="col-lg-6 col-md-6 mb-4 text-center mx-auto my-auto">
       <div class="card h-100">
         <div class="card-body center-block">
           <a href="/spider/{{ spider.id }}">
+
+              <img src="{{ breed.image }}" alt="MDN" height="100%" width="100%">
                     <h4 class="card-title">{{ spider.name }}</h4></a>
           <h5>{{ spider.price }}€</h5>
           <div class="card-footer">
             
+          <a href="/spider/update/{{ spider.id }}" class="btn btn-primary">Update</a>
+           <a href="/spider/remove/{{ spider.id }}" class="btn btn-primary">Remove</a>
           </div>
         </div>
       </div>

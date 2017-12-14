@@ -10,7 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Spiders;
+use App\Entity\Breeds;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class SpiderController extends Controller
 {
@@ -31,19 +34,36 @@ class SpiderController extends Controller
      */
     public function index()
     {
+     /* $em = $this->getDoctrine()->getManager();
+
+        $breed = new Breeds();
+        $breed->setName('Araneidae');
+        $breed->setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Argiope_catenulata_at_Kadavoor.jpg/220px-Argiope_catenulata_at_Kadavoor.jpg');
+
+        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $em->persist($breed);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $em->flush();*/
+
       $repository = $this->getDoctrine()->getRepository(Spiders::class);
       $spiders=$repository->findAll();
+      $repository = $this->getDoctrine()->getRepository(Breeds::class);
+      $breeds=$repository->findAll();
       return $this->render('spider.html.twig', array(
-    'spiders' => $spiders));
+    'spiders' => $spiders,
+    'breeds' => $breeds));
     }
 
     /**
      * @Route("/spider/add", name="spider_add")
      */
     public function addAction(Request $request){
-      $spider=new Spiders(); 
+      $spider=new Spiders();
         $form = $this->createFormBuilder($spider)
-            ->add('Name', TextType::class)
+        ->add('Name',  EntityType::class, array(
+    'class' => Breeds::class,
+    'choice_label' => 'name',))
             ->add('Price', NumberType::class)
             ->add('Save', SubmitType::class, array('label' => 'Add Spider'))
             ->getForm();
@@ -99,6 +119,10 @@ public function showAction($id)
         ->getRepository(Spiders::class)
         ->find($id);
 
+    $breed = $this->getDoctrine()
+        ->getRepository(Breeds::class)
+        ->findOneBy(['name' => $spider->getName()]);
+
     if (!$spider) {
         throw $this->createNotFoundException(
             'No spider found for id '.$id
@@ -108,8 +132,11 @@ public function showAction($id)
 
     // or render a template
     // in the template, print things with {{ spider.name }}
-    return $this->render('spider/show.html.twig', ['spider' => $spider]);
-}
+    return $this->render('spider/show.html.twig', array(
+    'spider' => $spider,
+    'breed' => $breed));
+    }
+
 
     /**
  * @Route("/spider/update/{id}", name="spider_update")
@@ -127,7 +154,9 @@ public function updateAction($id, Request $request)
     }
 
     $form = $this->createFormBuilder($spider)
-            ->add('Name', TextType::class)
+            ->add('Name',  EntityType::class, array(
+    'class' => Breeds::class,
+    'choice_label' => 'name',))
             ->add('Price', NumberType::class)
             ->add('Save', SubmitType::class, array('label' => 'Save'))
             ->getForm();

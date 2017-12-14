@@ -32,12 +32,19 @@
 </nav>
 </header>
 <ul id="navigation">
-<div class="row">
+<div class="row ">
             {% for spider in spiders %}
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4 text-center">
       <div class="card h-100">
         <div class="card-body">
           <a href="/spider/{{ spider.id }}">
+          {% set break = false %}
+          {% for breed in breeds if not break %}
+          	{% if breed.name == spider.name %}
+          		<img src="{{ breed.image }}" alt="MDN" height="50%" width="50%">
+				{% set break = true %}	
+          	{% endif %}
+          {% endfor %}
                     <h4 class="card-title">{{ spider.name }}</h4></a>
           <h5>{{ spider.price }}€</h5>
           <div class="card-footer">

@@ -33,6 +33,8 @@ class Spiders
 
     /**
      * @ORM\Column(type="decimal", scale=2, nullable=true)
+     * @Assert\GreaterThan(0)
+     * @Assert\LessThan(999999)
      */
     private $price;
 

@@ -7,11 +7,11 @@ parameters:
 
 doctrine:
     dbal:
-        dbname:               my_bdd
-        host:                 127.0.0.1
+        dbname:               db715626397
+        host:                 db715626397.db.1and1.com
         port:                 3306
-        user:                 kerast
-        password:             11235813
+        user:                 dbo715626397
+        password:             azertY23*
         driver:               pdo_mysql
         # the DBAL driverClass option
         driver_class:         App\DBAL\MyDatabaseDriver
